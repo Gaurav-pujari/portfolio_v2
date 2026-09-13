@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Gaurav Pujari</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./app.js"></script>
+</head>
+
+<body data-page="admin">
+  <nav class="nav">
+    <div class="navin">
+      <div class="brand"><span data-brand-logo></span><span data-brand-name>Portfolio</span></div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="clients.html">Clients</a>
+        <a href="articles.html">Articles</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <button class="btn" data-theme-toggle>Light</button>
+        <a class="btn active" href="admin.html">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- Login -->
+    <div class="card" id="adminLogin">
+      <div class="title" style="font-size:19px">Admin Login</div>
+      <div class="sub">Only for you</div>
+      <div class="hr"></div>
+
+      <label class="label">Password</label>
+      <input class="input" id="adminPw" type="password" placeholder="Enter password" />
+      <div style="margin-top:12px">
+        <button class="btn primary" id="btnAdminLogin">Login</button>
+      </div>
+
+      <div class="notice" style="margin-top:12px">
+        Note: This admin is local (browser storage + password check), not a secure backend —
+        don't reuse a sensitive password here. Default password is <b>gaurav@2026</b>; change
+        <code>ADMIN_PASSWORD</code> in app.js before sharing this repo publicly.
+      </div>
+    </div>
+
+    <!-- KPI Panel -->
+    <div class="card" id="adminPanel" style="display:none; margin-top:14px">
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center">
+        <div>
+          <div class="title" style="font-size:19px">Admin Panel</div>
+          <div class="sub">Edit KPIs (saved in your browser)</div>
+        </div>
+        <button class="btn" id="btnLogout">Logout</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="grid2">
+        <div>
+          <label class="label">Projects Completed</label>
+          <input class="input" id="inpCompleted" type="number" />
+        </div>
+        <div>
+          <label class="label">Ongoing Projects</label>
+          <input class="input" id="inpOngoing" type="number" />
+        </div>
+        <div>
+          <label class="label">Dashboards Built</label>
+          <input class="input" id="inpDashboards" type="number" />
+        </div>
+        <div>
+          <label class="label">Hours Delivered</label>
+          <input class="input" id="inpHours" type="number" />
+        </div>
+        <div>
+          <label class="label">Reports Automated</label>
+          <input class="input" id="inpReports" type="number" />
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <button class="btn primary" id="btnSaveKpis">Save</button>
+      </div>
+
+      <div class="notice" style="margin-top:12px">
+        Domain donut values are in <b>app.js</b> (stats.domainBreakdown).
+      </div>
+    </div>
+
+    <!-- Visitor Analytics -->
+    <div class="card" id="adminPanelVisits" style="margin-top:14px; display:none">
+      <div class="section-head-row">
+        <div>
+          <div class="title" style="font-size:19px">Who's Viewed Your Portfolio</div>
+          <div class="sub"><span class="stat-pill" id="visitCount">0</span>&nbsp; visits recorded on this device</div>
+        </div>
+        <button class="btn" id="btnClearVisits">Clear Log</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="notice">
+        <b>How this works:</b> every time someone opens your portfolio, this device/browser logs the
+        time, page, referrer, device type, browser, and a best-effort approximate location (city/ISP
+        from a free IP lookup) — no login or personal info required from the visitor. Because this is
+        a static site with no server, each browser only sees <b>its own</b> visits. To see visits that
+        happen on someone else's phone or laptop (e.g. an HR recruiter opening your link) in this same
+        log, connect a free cloud sync:
+        <ol style="margin:10px 0 0; padding-left:18px; line-height:1.7">
+          <li>Create a free bin at <b>jsonbin.io</b> and copy its Bin ID + X-Master-Key.</li>
+          <li>Open <b>app.js</b>, find <code>CLOUD_SYNC_URL</code> / <code>CLOUD_SYNC_KEY</code> near the visitor-analytics section, and paste them in.</li>
+          <li>Redeploy — every visit anywhere will now sync to that shared bin automatically.</li>
+        </ol>
+        Until that's set up, this log shows visits made from this browser only (great for testing).
+      </div>
+
+      <div class="visit-table-wrap" id="visitTableWrap" style="margin-top:14px"></div>
+    </div>
+
+    <div class="footer">© <span id="yr"></span> Gaurav Portfolio</div>
+  </main>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

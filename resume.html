@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume — Gaurav Pujari</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./app.js"></script>
+</head>
+
+<body data-page="resume">
+  <nav class="nav">
+    <div class="navin">
+      <div class="brand"><span data-brand-logo></span><span data-brand-name>Portfolio</span></div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="clients.html">Clients</a>
+        <a href="articles.html">Articles</a>
+        <a href="resume.html" class="active">Resume</a>
+        <a href="contact.html">Contact</a>
+        <button class="btn" data-theme-toggle>Light</button>
+        <a class="btn" href="admin.html">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">Resume</div>
+          <div class="title">Resume</div>
+          <div class="sub">Resume Preview Card — more useful than a plain PDF download button.</div>
+        </div>
+      </div>
+
+      <div class="card resume">
+        <div class="resumePreview"><img id="resumeImg1" src="./Resume_page-0001.jpg" alt="Resume page 1" /></div>
+        <div class="resumeInfo">
+          <span class="badge">UPDATED · <span id="resumeUpdated">FEB 2026</span></span>
+          <h3>Gaurav Ravindra Pujari</h3>
+          <p id="resumeBio">Business Analytics Associate with experience across SQL, BI dashboards, stakeholder management, data preparation and SaaS analytics.</p>
+          <div class="chips" id="resumeChips"></div>
+          <div class="heroactions">
+            <a class="btn primary" id="resumeDownload" href="./assets/Resume.pdf" download>Download PDF</a>
+            <a class="btn" id="resumeOpen" href="./assets/Resume.pdf" target="_blank">Open Resume</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <b style="font-size:13px">Page 2</b>
+        <div class="resumePreview small" style="margin-top:10px; max-width:420px">
+          <img id="resumeImg2" src="./Resume_page-0002.jpg" alt="Resume page 2" />
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© <span id="yr"></span> Gaurav Portfolio</div>
+  </main>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

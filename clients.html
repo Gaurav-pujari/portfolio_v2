@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clients — Gaurav Pujari</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./app.js"></script>
+</head>
+
+<body data-page="clients">
+  <nav class="nav">
+    <div class="navin">
+      <div class="brand"><span data-brand-logo></span><span data-brand-name>Portfolio</span></div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="clients.html" class="active">Clients</a>
+        <a href="articles.html">Articles</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <button class="btn" data-theme-toggle>Light</button>
+        <a class="btn" href="admin.html">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">Client Portfolio</div>
+          <div class="title">Companies & Industries I've Worked With</div>
+          <div class="sub">Industry → Client Cards, so the breadth of my work is immediately visible.</div>
+        </div>
+      </div>
+      <div class="grid3" id="clientsList"></div>
+    </section>
+
+    <div class="footer">© <span id="yr"></span> Gaurav Portfolio</div>
+  </main>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

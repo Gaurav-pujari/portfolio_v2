@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaurav Pujari — Portfolio</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <script defer src="./app.js"></script>
+</head>
+
+<body data-page="dashboard">
+  <nav class="nav">
+    <div class="navin">
+      <div class="brand"><span data-brand-logo></span><span data-brand-name>Portfolio</span></div>
+      <div class="links">
+        <a href="index.html" class="active">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="clients.html">Clients</a>
+        <a href="articles.html">Articles</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <button class="btn" data-theme-toggle>Light</button>
+        <a class="btn" href="admin.html">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" id="home">
+
+    <!-- Hero -->
+    <section class="section">
+      <div class="card">
+        <div class="hero">
+          <div class="avatar"><img id="photo" src="./Profile Photo.jpg" alt="Gaurav Pujari" /></div>
+          <div>
+            <div class="name" id="name">-</div>
+            <div class="role" id="role"></div>
+            <div class="company" id="companyLine"></div>
+            <div class="chips">
+              <span class="chip">Data Analytics</span>
+              <span class="chip">Business Intelligence</span>
+              <span class="chip">SaaS Analytics</span>
+            </div>
+            <div class="heroactions">
+              <a class="btn primary" id="lnkResume" href="resume.html">View Resume</a>
+              <a class="btn" id="lnkProjects" href="projects.html">Explore Projects</a>
+              <a class="btn" id="lnkContact" href="contact.html">Let's Connect</a>
+            </div>
+          </div>
+          <div class="heroStat">
+            <span>Analytics Projects</span>
+            <b id="heroStatValue">-</b>
+            <span style="margin-top:7px">Dashboards built: <b id="heroStatValue2" style="font-size:14px">-</b></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI Strip -->
+    <section class="section">
+      <div class="kpis" id="kpiStrip"></div>
+    </section>
+
+    <!-- Experience -->
+    <section class="section" id="experience">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">01 · Experience</div>
+          <div class="title">Professional Journey</div>
+          <div class="sub">A clean interactive timeline of my work history.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="timeline" id="expList"></div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section" id="skills">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">02 · Expertise</div>
+          <div class="title">Skills & Expertise</div>
+          <div class="sub">Grouped by what recruiters actually look for.</div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card" id="skillsCardA"></div>
+        <div class="card" id="skillsCardB"></div>
+      </div>
+    </section>
+
+    <!-- Education + Certifications + Domain Mix -->
+    <section class="section">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">03 · Background</div>
+          <div class="title">Education, Certifications & Project Mix</div>
+          <div class="sub">Academic background and where my project experience comes from.</div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <b style="font-size:13px">Education</b>
+          <div id="eduList" style="margin-top:8px"></div>
+        </div>
+        <div class="card">
+          <b style="font-size:13px">Certifications</b>
+          <div id="certList" style="margin-top:8px"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <b style="font-size:13px">Project Distribution by Industry</b>
+        <div style="margin-top:12px; height:280px">
+          <canvas id="donut"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© <span id="yr"></span> Gaurav Portfolio</div>
+  </main>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

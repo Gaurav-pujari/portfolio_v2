@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Gaurav Pujari</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./app.js"></script>
+</head>
+
+<body data-page="contact">
+  <nav class="nav">
+    <div class="navin">
+      <div class="brand"><span data-brand-logo></span><span data-brand-name>Portfolio</span></div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="clients.html">Clients</a>
+        <a href="articles.html">Articles</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html" class="active">Contact</a>
+        <button class="btn" data-theme-toggle>Light</button>
+        <a class="btn" href="admin.html">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="section">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">Contact</div>
+          <div class="title">Let's Connect</div>
+          <div class="sub">Personal details on the left, message form on the right.</div>
+        </div>
+      </div>
+
+      <div class="card contact">
+        <div>
+          <h3 style="margin-top:0">Have an analytics requirement or opportunity?</h3>
+          <p class="body">Let's discuss dashboards, data analytics, business intelligence, or a potential collaboration.</p>
+
+          <div class="contactItem"><span>Email</span><b id="contactEmail">-</b></div>
+          <div class="contactItem"><span>LinkedIn</span><b><a id="lnkLinkedIn2" href="#" target="_blank"><span id="contactLinkedIn">-</span></a></b></div>
+          <div class="contactItem"><span>GitHub</span><b><a id="lnkGitHub2" href="#" target="_blank"><span id="contactGitHub">-</span></a></b></div>
+          <div class="contactItem"><span>Location</span><b id="contactLocation">-</b></div>
+        </div>
+
+        <form class="form" id="contactForm">
+          <input class="input" id="cfName" placeholder="Your name" required />
+          <input class="input" id="cfEmail" type="email" placeholder="Email address" required />
+          <input class="input" id="cfSubject" placeholder="Subject" />
+          <textarea class="input textarea" id="cfMessage" placeholder="Tell me about your requirement..." required></textarea>
+          <button class="btn primary" type="submit">Send Message →</button>
+        </form>
+      </div>
+    </section>
+
+    <div class="footer">© <span id="yr"></span> Gaurav Portfolio</div>
+  </main>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

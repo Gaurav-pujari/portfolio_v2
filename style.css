@@ -251,6 +251,37 @@ table.visit-table tr:hover td{background:rgba(108,92,231,.05)}
 /* ---------- Section-head link ---------- */
 .section-head-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .view-all-link{font-size:12px;font-weight:900;color:var(--accent)}
+
+body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.experience-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+.experience-company {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.experience-meta {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.75;
+}
+
+.experience-description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.experience-description li {
+    margin-bottom: 8px;
+}
 .view-all-link:hover{text-decoration:underline}
 
 /* ---------- Footer ---------- */

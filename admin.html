@@ -30,7 +30,7 @@
     <!-- Login -->
     <div class="card" id="adminLogin">
       <div class="title" style="font-size:19px">Admin Login</div>
-      <div class="sub"></div>
+      <div class="sub">Only for you</div>
       <div class="hr"></div>
 
       <label class="label">Password</label>
@@ -38,7 +38,6 @@
       <div style="margin-top:12px">
         <button class="btn primary" id="btnAdminLogin">Login</button>
       </div>
-
 
     </div>
 
@@ -148,6 +147,12 @@
 
         <label class="label">Title</label>
         <input class="input" id="afTitle" placeholder="Article title" />
+
+        <label class="label" style="margin-top:10px">Image URL (optional)</label>
+        <input class="input" id="afImage" placeholder="https://... or ./my-article-image.png" />
+        <div class="notice" style="margin-top:8px; font-size:11.5px">
+          Paste a link to an already-hosted image (e.g. from LinkedIn, Imgur, or your own site), or upload the image file into your GitHub repo alongside the other images and enter its filename here, like <code>./ai-analytics-cover.png</code>. Leave blank to use the plain color header.
+        </div>
 
         <div class="grid2" style="margin-top:10px">
           <div>

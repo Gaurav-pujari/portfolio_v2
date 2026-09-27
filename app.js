@@ -640,12 +640,9 @@ function renderClients(containerId) {
 /* ================================
    ✅ Articles — Featured Cards
 ================================ */
-function renderArticles(containerId, limit) {
-  const data = getData();
+function renderArticlesFromList(containerId, items, limit) {
   const wrap = el(containerId);
   if (!wrap) return;
-
-  let items = data.articles || [];
   if (limit) items = items.slice(0, limit);
 
   wrap.innerHTML = items
@@ -816,7 +813,7 @@ function renderClientsPage() {
 
 function renderArticlesPage() {
   renderHero();
-  renderArticles("articlesList");
+  loadArticles().then((articles) => renderArticlesFromList("articlesList", articles));
   trackVisit();
 }
 
@@ -830,48 +827,55 @@ function renderArticlePage() {
 
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
-  const data = getData();
-  const article = (data.articles || []).find((a) => a.id === id);
-  const wrap = el("articleContent");
+  const isAdmin = sessionStorage.getItem(ADMIN_SESSION_KEY) === "1";
 
-  if (!article) {
-    if (wrap) {
-      wrap.innerHTML = `
-        <div class="notice">
-          Couldn't find that article. <a href="articles.html"><b>← Back to all articles</b></a>
-        </div>
-      `;
+  loadArticles().then((articles) => {
+    const article = articles.find((a) => a.id === id);
+    const wrap = el("articleContent");
+
+    if (!article) {
+      if (wrap) {
+        wrap.innerHTML = `
+          <div class="notice">
+            Couldn't find that article. <a href="articles.html"><b>← Back to all articles</b></a>
+          </div>
+        `;
+      }
+      return;
     }
-    trackVisit();
-    return;
-  }
 
-  if (el("articleCat")) el("articleCat").textContent = `${article.category} · ${article.readTime}`;
-  if (el("articleTitle")) el("articleTitle").textContent = article.title;
-  if (el("articleDate")) el("articleDate").textContent = article.date;
-  document.title = `${article.title} — Gaurav Pujari`;
+    if (el("articleCat")) el("articleCat").textContent = `${article.category} · ${article.readTime}`;
+    if (el("articleTitle")) el("articleTitle").textContent = article.title;
+    if (el("articleDate")) el("articleDate").textContent = article.date;
+    document.title = `${article.title} — Gaurav Pujari`;
 
-  if (wrap) {
-    wrap.innerHTML = (article.content || [article.summary])
-      .map((para) => `<p>${para}</p>`)
-      .join("");
-  }
+    if (wrap) {
+      wrap.innerHTML = (article.content || [article.summary]).map((para) => `<p>${para}</p>`).join("");
+    }
 
-  // Build a ready-to-copy share link (this page's own URL) for pasting on LinkedIn
-  const shareUrl = window.location.href;
-  if (el("shareUrlBox")) el("shareUrlBox").textContent = shareUrl;
-  const copyBtn = el("btnCopyLink");
-  if (copyBtn) {
-    copyBtn.onclick = () => {
-      navigator.clipboard
-        .writeText(shareUrl)
-        .then(() => {
-          copyBtn.textContent = "Copied!";
-          setTimeout(() => (copyBtn.textContent = "Copy Link"), 1500);
-        })
-        .catch(() => alert(shareUrl));
-    };
-  }
+    // ✅ Copy Link is admin-only — regular visitors never see it
+    const shareBox = el("adminOnlyShare");
+    if (shareBox) {
+      shareBox.style.display = isAdmin ? "block" : "none";
+
+      if (isAdmin) {
+        const shareUrl = window.location.href;
+        if (el("shareUrlBox")) el("shareUrlBox").textContent = shareUrl;
+        const copyBtn = el("btnCopyLink");
+        if (copyBtn) {
+          copyBtn.onclick = () => {
+            navigator.clipboard
+              .writeText(shareUrl)
+              .then(() => {
+                copyBtn.textContent = "Copied!";
+                setTimeout(() => (copyBtn.textContent = "Copy Link"), 1500);
+              })
+              .catch(() => alert(shareUrl));
+          };
+        }
+      }
+    }
+  });
 
   trackVisit();
 }
@@ -966,11 +970,71 @@ function trackVisit() {
   }
 }
 
+/* =========================================================
+   ✅ ARTICLES — shared storage (so admin edits show to everyone)
+   -----------------------------------------------------------
+   Same static-site limitation as visits: without a shared store,
+   anything saved in the Admin panel is only visible in the same
+   browser that saved it. To make articles actually visible to
+   real visitors, configure a free jsonbin.io bin below — steps
+   are also shown on the Admin page.
+========================================================= */
+const ARTICLES_SYNC_URL = ""; // e.g. "https://api.jsonbin.io/v3/b/XXXXXXXX"
+const ARTICLES_SYNC_KEY = ""; // your X-Master-Key from jsonbin.io
+
+function articlesSyncConfigured() {
+  return Boolean(ARTICLES_SYNC_URL && ARTICLES_SYNC_KEY);
+}
+
+/* Resolves the list of articles to show: cloud bin if configured
+   (so every visitor sees the same list), otherwise whatever is
+   saved locally (or the built-in defaults). */
+async function loadArticles() {
+  if (articlesSyncConfigured()) {
+    try {
+      const res = await fetch(`${ARTICLES_SYNC_URL}/latest`, {
+        headers: { "X-Master-Key": ARTICLES_SYNC_KEY },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const arr = json && json.record && Array.isArray(json.record.articles) ? json.record.articles : null;
+        if (arr) return arr;
+      }
+    } catch {
+      /* fall through to local */
+    }
+  }
+  return getData().articles || [];
+}
+
+async function saveArticlesCloud(articles) {
+  if (!articlesSyncConfigured()) return false;
+  try {
+    const res = await fetch(ARTICLES_SYNC_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "X-Master-Key": ARTICLES_SYNC_KEY },
+      body: JSON.stringify({ articles }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+/* Always saves locally (so it works instantly for you), and also
+   pushes to the cloud bin when configured (so it works for everyone). */
+async function persistArticles(articles) {
+  const data = getData();
+  data.articles = articles;
+  localStorage.setItem(LS_KEY, JSON.stringify(data));
+  return await saveArticlesCloud(articles);
+}
+
 /* ================================
    Admin Page
 ================================ */
 const ADMIN_SESSION_KEY = "gaurav_admin_session_v1";
-const ADMIN_PASSWORD = "Gaurav@8483"; // ⚠️ change this before sharing the repo publicly
+const ADMIN_PASSWORD = "gaurav@2026"; // ⚠️ change this before sharing the repo publicly
 
 function renderVisitorLog() {
   const wrap = el("visitTableWrap");
@@ -1016,12 +1080,14 @@ function renderAdminPage() {
   const loginBox = el("adminLogin");
   const panel = el("adminPanel");
   const visitsPanel = el("adminPanelVisits");
+  const articlesPanel = el("adminPanelArticles");
   const isLoggedIn = sessionStorage.getItem(ADMIN_SESSION_KEY) === "1";
 
   function showPanel() {
     if (loginBox) loginBox.style.display = "none";
     if (panel) panel.style.display = "block";
     if (visitsPanel) visitsPanel.style.display = "block";
+    if (articlesPanel) articlesPanel.style.display = "block";
 
     const data = getData();
     if (el("inpCompleted")) el("inpCompleted").value = data.stats.completedProjects ?? 0;
@@ -1031,6 +1097,7 @@ function renderAdminPage() {
     if (el("inpReports")) el("inpReports").value = data.stats.reportsAutomated ?? 0;
 
     renderVisitorLog();
+    renderArticleAdmin();
   }
 
   if (isLoggedIn) showPanel();
@@ -1055,6 +1122,7 @@ function renderAdminPage() {
       if (loginBox) loginBox.style.display = "block";
       if (panel) panel.style.display = "none";
       if (visitsPanel) visitsPanel.style.display = "none";
+      if (articlesPanel) articlesPanel.style.display = "none";
     };
   }
 
@@ -1079,6 +1147,135 @@ function renderAdminPage() {
       if (confirm("Clear all locally recorded visits?")) {
         localStorage.removeItem(VISITS_KEY);
         renderVisitorLog();
+      }
+    };
+  }
+
+  wireArticleAdminControls();
+}
+
+/* ================================
+   ✅ Admin — Manage Articles
+================================ */
+function clearArticleForm() {
+  ["afId", "afTitle", "afCategory", "afReadTime", "afDate", "afSummary", "afContent"].forEach((id) => {
+    if (el(id)) el(id).value = "";
+  });
+}
+
+async function renderArticleAdmin() {
+  const listWrap = el("articleAdminList");
+  const notice = el("articleSyncNotice");
+  if (!listWrap) return;
+
+  if (notice) {
+    notice.innerHTML = articlesSyncConfigured()
+      ? "✅ Cloud sync is configured — articles you save here will be visible to <b>all visitors</b>, on any device."
+      : "⚠️ Cloud sync isn't configured yet, so articles you add here only save to <b>this browser</b> and won't be visible to real visitors. See setup steps below.";
+  }
+
+  const articles = await loadArticles();
+
+  listWrap.innerHTML = articles
+    .map(
+      (a) => `
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border)">
+          <div>
+            <b style="font-size:13px">${a.title}</b>
+            <div class="muted" style="font-size:11px; margin-top:2px">${a.category} • ${a.date}</div>
+          </div>
+          <div style="display:flex; gap:6px; flex-shrink:0">
+            <button class="btn" data-edit-article="${a.id}">Edit</button>
+            <button class="btn" data-delete-article="${a.id}">Delete</button>
+          </div>
+        </div>
+      `
+    )
+    .join("");
+
+  listWrap.querySelectorAll("[data-edit-article]").forEach((btn) => {
+    btn.onclick = async () => {
+      const id = btn.getAttribute("data-edit-article");
+      const list = await loadArticles();
+      const a = list.find((x) => x.id === id);
+      if (!a) return;
+      if (el("afId")) el("afId").value = a.id;
+      if (el("afTitle")) el("afTitle").value = a.title || "";
+      if (el("afCategory")) el("afCategory").value = a.category || "";
+      if (el("afReadTime")) el("afReadTime").value = a.readTime || "";
+      if (el("afDate")) el("afDate").value = a.date || "";
+      if (el("afSummary")) el("afSummary").value = a.summary || "";
+      if (el("afContent")) el("afContent").value = (a.content || []).join("\n\n");
+      if (el("articleForm")) el("articleForm").style.display = "block";
+    };
+  });
+
+  listWrap.querySelectorAll("[data-delete-article]").forEach((btn) => {
+    btn.onclick = async () => {
+      if (!confirm("Delete this article? This can't be undone.")) return;
+      const id = btn.getAttribute("data-delete-article");
+      const list = await loadArticles();
+      const next = list.filter((x) => x.id !== id);
+      await persistArticles(next);
+      renderArticleAdmin();
+    };
+  });
+}
+
+function wireArticleAdminControls() {
+  const btnNew = el("btnNewArticle");
+  if (btnNew) {
+    btnNew.onclick = () => {
+      clearArticleForm();
+      if (el("articleForm")) el("articleForm").style.display = "block";
+    };
+  }
+
+  const btnCancel = el("btnCancelArticle");
+  if (btnCancel) {
+    btnCancel.onclick = () => {
+      if (el("articleForm")) el("articleForm").style.display = "none";
+      clearArticleForm();
+    };
+  }
+
+  const btnSaveArticle = el("btnSaveArticle");
+  if (btnSaveArticle) {
+    btnSaveArticle.onclick = async () => {
+      const title = el("afTitle") ? el("afTitle").value.trim() : "";
+      if (!title) {
+        alert("Please enter a title.");
+        return;
+      }
+
+      const articles = await loadArticles();
+      const id = (el("afId") && el("afId").value) || `a${Date.now()}`;
+
+      const updated = {
+        id,
+        title,
+        category: el("afCategory") ? el("afCategory").value.trim() : "",
+        readTime: (el("afReadTime") && el("afReadTime").value.trim()) || "5 min read",
+        date: el("afDate") ? el("afDate").value.trim() : "",
+        summary: el("afSummary") ? el("afSummary").value.trim() : "",
+        content: el("afContent")
+          ? el("afContent")
+              .value.split(/\n\s*\n/)
+              .map((p) => p.trim())
+              .filter(Boolean)
+          : [],
+      };
+
+      const idx = articles.findIndex((a) => a.id === id);
+      const next = idx >= 0 ? articles.map((a, i) => (i === idx ? updated : a)) : [updated, ...articles];
+
+      const synced = await persistArticles(next);
+      if (el("articleForm")) el("articleForm").style.display = "none";
+      clearArticleForm();
+      renderArticleAdmin();
+
+      if (!synced && articlesSyncConfigured()) {
+        alert("Saved locally, but the cloud sync request failed — check your ARTICLES_SYNC_URL/KEY.");
       }
     };
   }

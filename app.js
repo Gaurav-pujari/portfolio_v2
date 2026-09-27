@@ -1047,7 +1047,7 @@ async function persistArticles(articles) {
    Admin Page
 ================================ */
 const ADMIN_SESSION_KEY = "gaurav_admin_session_v1";
-const ADMIN_PASSWORD = "gaurav@2026"; // ⚠️ change this before sharing the repo publicly
+const ADMIN_PASSWORD = "Gaurav@8483"; // ⚠️ change this before sharing the repo publicly
 
 function renderVisitorLog() {
   const wrap = el("visitTableWrap");

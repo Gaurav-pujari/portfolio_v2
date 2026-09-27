@@ -119,7 +119,7 @@ transform complex datasets into actionable insights and automate reporting workf
     { id: "c3", name: "Inflection Point Venture (IPV)", logo: "./ipventures.jpg", industry: "Venture Capital · Tally Insights & Analytics" },
     { id: "c4", name: "GSN Groups", logo: "./gsn groups.png", industry: "Packaging · Tally Analytics & Business Insights" },
     { id: "c5", name: "Coolfi", logo: "./coolfi.png", industry: "Business Analytics · Tally Insights & Analytics" },
-    { id: "c6", name: "Daffoworth Pharmaceutical Pvt Ltd", logo: "./Daffoworth.jpg", industry: "Pharma · Sales, Purchase & Inventory Optimization" },
+    { id: "c6", name: "Daffoworth Pharmaceutical Pvt Ltd", logo: "./Daffoworth.jpg", industry: "Pharma · Marketing · Sales, Purchase & Inventory Optimization" },
   ],
 
   projects: [

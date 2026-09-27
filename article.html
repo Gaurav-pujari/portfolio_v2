@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article — Gaurav Pujari</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./app.js"></script>
+</head>
+
+<body data-page="article">
+  <nav class="nav">
+    <div class="navin">
+      <div class="brand"><span data-brand-logo></span><span data-brand-name>Portfolio</span></div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="clients.html">Clients</a>
+        <a href="articles.html" class="active">Articles</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <button class="btn" data-theme-toggle>Light</button>
+        <a class="btn" href="admin.html">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="max-width:760px">
+    <a href="articles.html" class="btn" style="display:inline-block; margin-top:18px">← All Articles</a>
+
+    <section class="section">
+      <div class="card">
+        <span class="cat" id="articleCat">-</span>
+        <h1 id="articleTitle" style="font-size:26px; margin:12px 0 6px">-</h1>
+        <div class="muted" style="font-size:12px" id="articleDate">-</div>
+
+        <div class="hr"></div>
+
+        <div id="articleContent" style="font-size:14px; line-height:1.9; color:var(--text)"></div>
+
+        <div id="adminOnlyShare" style="display:none">
+          <div class="hr"></div>
+          <div class="label">Share this article's link on LinkedIn</div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px">
+            <code id="shareUrlBox" style="font-size:11.5px; color:var(--muted); word-break:break-all; padding:8px 10px; border:1px solid var(--border); border-radius:10px; flex:1; min-width:200px"></code>
+            <button class="btn primary" id="btnCopyLink">Copy Link</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© <span id="yr"></span> Gaurav Portfolio</div>
+  </main>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

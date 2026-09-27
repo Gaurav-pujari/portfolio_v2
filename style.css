@@ -101,20 +101,20 @@ img{max-width:100%}
 
 /* small company monogram used inline (kept from earlier logo requirement) */
 .company-logo{
-  width:50px;height:50px;border-radius:9px;display:flex;align-items:center;justify-content:center;
-  font-weight:950;font-size:11px;color:#fff;flex-shrink:0;
+  width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-weight:950;font-size:12px;color:#fff;flex-shrink:0;
 }
-.company-logo.sm{width:22px;height:22px;font-size:9px;border-radius:7px}
+.company-logo.sm{width:32px;height:32px;font-size:11px;border-radius:8px}
 
 /* Real uploaded logo image (falls back to the badge above via onerror) */
 .company-logo-img{
-  width:30px !important;height:30px !important;border-radius:8px;object-fit:contain;
-  background:#ffffff;padding:3px;flex-shrink:0;border:1px solid var(--border);
-  max-width:30px !important;max-height:30px !important;
+  width:44px !important;height:44px !important;border-radius:9px;object-fit:contain;
+  background:#ffffff;padding:4px;flex-shrink:0;border:1px solid var(--border);
+  max-width:44px !important;max-height:44px !important;
 }
 .company-logo-img.sm{
-  width:22px !important;height:22px !important;border-radius:6px;padding:2px;
-  max-width:22px !important;max-height:22px !important;
+  width:38px !important;height:38px !important;border-radius:8px;padding:3px;
+  max-width:38px !important;max-height:38px !important;
 }
 
 /* ---------- KPI strip ---------- */

@@ -32,6 +32,7 @@ transform complex datasets into actionable insights and automate reporting workf
     linkedin: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
     github: "https://github.com/Gaurav-pujari/",
     location: "Pune, Maharashtra, India",
+
     photo: "./Profile Photo.jpg",
   },
 
@@ -39,8 +40,8 @@ transform complex datasets into actionable insights and automate reporting workf
     name: "Aurochs Solutions",
     logo: "./Aurochs Solutions.png", // ⬅️ drop your logo file in with this exact name
     designation: "Business Analytics Associate",
-    tagline: "SaaS Analytics & Business Intelligence"
-
+    tagline: "SaaS Analytics & Business Intelligence",
+    since: "Mar 2026",
   },
 
   stats: {
@@ -114,12 +115,12 @@ transform complex datasets into actionable insights and automate reporting workf
   ],
 
   clients: [
-    { id: "c1", name: "Noise", logo: "./Noise Logo.jpg", industry: "Consumer Electronics | Sales & Product Analytics" },
-    { id: "c2", name: "Living Liquidz", logo: "./Living Liquidz.png", industry: "FMCG · Sales, Purchase & Inventory Optimization" },
-    { id: "c3", name: "Inflection Point Venture (IPV)", logo: "./ipventures.jpg", industry: "Venture Capital · Tally Insights & Analytics" },
-    { id: "c4", name: "GSN Groups", logo: "./gsn groups.png", industry: "Packaging · Tally Analytics & Business Insights" },
-    { id: "c5", name: "Coolfi", logo: "./coolfi.png", industry: "Business Analytics · Tally Insights & Analytics" },
-    { id: "c6", name: "Daffoworth Pharmaceutical Pvt Ltd", logo: "./Daffoworth.jpg", industry: "Pharma · Marketing · Sales, Purchase & Inventory Optimization" },
+    { id: "c1", name: "Noise", logo: "./Noise Logo.jpg", industry: "FMCG · Analytics" },
+    { id: "c2", name: "Living Liquidz", logo: "./Living Liquidz.png", industry: "FMCG · Sales / Inventory" },
+    { id: "c3", name: "Inflection Point Venture (IPV)", logo: "./ipventures.jpg", industry: "Venture Capital · Analytics" },
+    { id: "c4", name: "GSN Groups", logo: "./gsn groups.png", industry: "Business Analytics" },
+    { id: "c5", name: "Coolfi", logo: "./coolfi.png", industry: "Business Analytics" },
+    { id: "c6", name: "Daffoworth Pharmaceutical Pvt Ltd", logo: "./Daffoworth.jpg", industry: "Pharma · Inventory" },
   ],
 
   projects: [
@@ -435,7 +436,7 @@ function renderHero() {
     el("companyLine").innerHTML = `
       ${companyLogoHTML(c.name, c.logo, "sm")}
       <span>${c.name}</span>
-      <span class="muted">• ${p.location}</span>
+      <span class="muted">• ${p.location} • Since ${c.since}</span>
     `;
   }
 
@@ -645,10 +646,12 @@ function renderArticlesFromList(containerId, items, limit) {
   if (limit) items = items.slice(0, limit);
 
   wrap.innerHTML = items
-    .map(
-      (a) => `
+    .map((a) => {
+      const hasImg = Boolean(a.image);
+      const topStyle = hasImg ? ` style="background-image:url('${a.image}')"` : "";
+      return `
         <article class="card article">
-          <div class="articleTop"><span class="cat">${a.category} · ${a.readTime}</span></div>
+          <div class="articleTop ${hasImg ? "hasImg" : ""}"${topStyle}><span class="cat">${a.category} · ${a.readTime}</span></div>
           <h3>${a.title}</h3>
           <div class="body">${a.summary}</div>
           <div class="articlefoot">
@@ -656,8 +659,8 @@ function renderArticlesFromList(containerId, items, limit) {
             <a href="article.html?id=${a.id}"><b>Read →</b></a>
           </div>
         </article>
-      `
-    )
+      `;
+    })
     .join("");
 }
 
@@ -848,6 +851,17 @@ function renderArticlePage() {
     if (el("articleDate")) el("articleDate").textContent = article.date;
     document.title = `${article.title} — Gaurav Pujari`;
 
+    const heroImg = el("articleHeroImg");
+    if (heroImg) {
+      if (article.image) {
+        heroImg.src = article.image;
+        heroImg.alt = article.title;
+        heroImg.style.display = "block";
+      } else {
+        heroImg.style.display = "none";
+      }
+    }
+
     if (wrap) {
       wrap.innerHTML = (article.content || [article.summary]).map((para) => `<p>${para}</p>`).join("");
     }
@@ -978,8 +992,8 @@ function trackVisit() {
    real visitors, configure a free jsonbin.io bin below — steps
    are also shown on the Admin page.
 ========================================================= */
-const ARTICLES_SYNC_URL = "https://api.jsonbin.io/v3/b/6ab91765ffd5d160533470d4"; // e.g. "https://api.jsonbin.io/v3/b/XXXXXXXX"
-const ARTICLES_SYNC_KEY = "$2a$10$z2eiCYzq/fuz6ewgeZECbud7mfCabWVnzfbmx.rCAQLfyS2m4tQei"; // your X-Master-Key from jsonbin.io
+const ARTICLES_SYNC_URL = ""; // e.g. "https://api.jsonbin.io/v3/b/XXXXXXXX"
+const ARTICLES_SYNC_KEY = ""; // your X-Master-Key from jsonbin.io
 
 function articlesSyncConfigured() {
   return Boolean(ARTICLES_SYNC_URL && ARTICLES_SYNC_KEY);
@@ -1033,7 +1047,7 @@ async function persistArticles(articles) {
    Admin Page
 ================================ */
 const ADMIN_SESSION_KEY = "gaurav_admin_session_v1";
-const ADMIN_PASSWORD = "Gaurav@8483"; // ⚠️ change this before sharing the repo publicly
+const ADMIN_PASSWORD = "gaurav@2026"; // ⚠️ change this before sharing the repo publicly
 
 function renderVisitorLog() {
   const wrap = el("visitTableWrap");
@@ -1157,7 +1171,7 @@ function renderAdminPage() {
    ✅ Admin — Manage Articles
 ================================ */
 function clearArticleForm() {
-  ["afId", "afTitle", "afCategory", "afReadTime", "afDate", "afSummary", "afContent"].forEach((id) => {
+  ["afId", "afTitle", "afImage", "afCategory", "afReadTime", "afDate", "afSummary", "afContent"].forEach((id) => {
     if (el(id)) el(id).value = "";
   });
 }
@@ -1200,6 +1214,7 @@ async function renderArticleAdmin() {
       if (!a) return;
       if (el("afId")) el("afId").value = a.id;
       if (el("afTitle")) el("afTitle").value = a.title || "";
+      if (el("afImage")) el("afImage").value = a.image || "";
       if (el("afCategory")) el("afCategory").value = a.category || "";
       if (el("afReadTime")) el("afReadTime").value = a.readTime || "";
       if (el("afDate")) el("afDate").value = a.date || "";
@@ -1253,6 +1268,7 @@ function wireArticleAdminControls() {
       const updated = {
         id,
         title,
+        image: el("afImage") ? el("afImage").value.trim() : "",
         category: el("afCategory") ? el("afCategory").value.trim() : "",
         readTime: (el("afReadTime") && el("afReadTime").value.trim()) || "5 min read",
         date: el("afDate") ? el("afDate").value.trim() : "",

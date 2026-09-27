@@ -40,8 +40,8 @@ transform complex datasets into actionable insights and automate reporting workf
     name: "Aurochs Solutions",
     logo: "./Aurochs Solutions.png", // ⬅️ drop your logo file in with this exact name
     designation: "Business Analytics Associate",
-    tagline: "SaaS Analytics & Business Intelligence",
-    since: "Mar 2026",
+    tagline: "SaaS Analytics & Business Intelligence"
+
   },
 
   stats: {

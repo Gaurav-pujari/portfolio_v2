@@ -114,12 +114,12 @@ transform complex datasets into actionable insights and automate reporting workf
   ],
 
   clients: [
-    { id: "c1", name: "Noise", logo: "./Noise Logo.jpg", industry: "FMCG · Analytics" },
-    { id: "c2", name: "Living Liquidz", logo: "./Living Liquidz.png", industry: "FMCG · Sales / Inventory" },
-    { id: "c3", name: "Inflection Point Venture (IPV)", logo: "./ipventures.jpg", industry: "Venture Capital · Analytics" },
-    { id: "c4", name: "GSN Groups", logo: "./gsn groups.png", industry: "Business Analytics" },
-    { id: "c5", name: "Coolfi", logo: "./coolfi.png", industry: "Business Analytics" },
-    { id: "c6", name: "Daffoworth Pharmaceutical Pvt Ltd", logo: "./Daffoworth.jpg", industry: "Pharma · Inventory" },
+    { id: "c1", name: "Noise", logo: "./Noise Logo.jpg", industry: "Consumer Electronics | Sales & Product Analytics" },
+    { id: "c2", name: "Living Liquidz", logo: "./Living Liquidz.png", industry: "FMCG · Sales, Purchase & Inventory Optimization" },
+    { id: "c3", name: "Inflection Point Venture (IPV)", logo: "./ipventures.jpg", industry: "Venture Capital · Tally Insights & Analytics" },
+    { id: "c4", name: "GSN Groups", logo: "./gsn groups.png", industry: "Packaging · Tally Analytics & Business Insights" },
+    { id: "c5", name: "Coolfi", logo: "./coolfi.png", industry: "Business Analytics · Tally Insights & Analytics" },
+    { id: "c6", name: "Daffoworth Pharmaceutical Pvt Ltd", logo: "./Daffoworth.jpg", industry: "Pharma · Sales, Purchase & Inventory Optimization" },
   ],
 
   projects: [

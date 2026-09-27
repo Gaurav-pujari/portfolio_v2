@@ -435,7 +435,7 @@ function renderHero() {
     el("companyLine").innerHTML = `
       ${companyLogoHTML(c.name, c.logo, "sm")}
       <span>${c.name}</span>
-      <span class="muted">• ${p.location} • Since ${c.since}</span>
+      <span class="muted">• ${p.location}</span>
     `;
   }
 

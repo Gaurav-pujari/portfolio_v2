@@ -32,7 +32,6 @@ transform complex datasets into actionable insights and automate reporting workf
     linkedin: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
     github: "https://github.com/Gaurav-pujari/",
     location: "Pune, Maharashtra, India",
-
     photo: "./Profile Photo.jpg",
   },
 

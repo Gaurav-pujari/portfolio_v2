@@ -40,7 +40,8 @@ transform complex datasets into actionable insights and automate reporting workf
     name: "Aurochs Solutions",
     logo: "./Aurochs Solutions.png", // ⬅️ drop your logo file in with this exact name
     designation: "Business Analytics Associate",
-    tagline: "SaaS Analytics & Business Intelligence"
+    tagline: "SaaS Analytics & Business Intelligence",
+    since: "Mar 2026",
   },
 
   stats: {
@@ -170,7 +171,13 @@ transform complex datasets into actionable insights and automate reporting workf
       summary: "MTD, YTD, ROAS and ROMI measures I reuse on almost every client dashboard — with the exact logic and common mistakes to avoid.",
       date: "Aug 2026",
       readTime: "5 min read",
-      link: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
+      content: [
+        "Every client dashboard I've built in the last year, no matter the industry, ends up needing the same handful of DAX measures. Once you have a clean, reusable version of each, building a new dashboard's KPI layer takes a fraction of the time.",
+        "Month-to-Date (MTD) and Year-to-Date (YTD) are the two most requested measures, and they're also the two most commonly gotten wrong. The mistake I see most often is using CALCULATE with a hardcoded date filter instead of DATESMTD/DATESYTD, which silently breaks the moment someone changes the reporting period.",
+        "ROAS (Return on Ad Spend) and ROMI (Return on Marketing Investment) look similar but answer different questions — ROAS is a channel-level efficiency metric, ROMI is a business-level profitability metric. Mixing the two up in a single dashboard confuses stakeholders fast, so I always label them with the exact formula in a tooltip.",
+        "The other pattern worth stealing is a single 'Selected Period' measure that dynamically swaps between MTD, QTD and YTD based on a slicer, instead of building three separate visuals. It cuts dashboard clutter significantly and stakeholders only ever ask for one number at a time anyway.",
+        "The common thread across all of these: get the time-intelligence functions right once, wrap them in well-named measures, and reuse them everywhere. It's saved me hours on every single project since I started doing it this way.",
+      ],
     },
     {
       id: "a2",
@@ -179,7 +186,13 @@ transform complex datasets into actionable insights and automate reporting workf
       summary: "The repeatable checklist I run before any stakeholder sees a dashboard — nulls, duplicates, type mismatches and validation joins.",
       date: "Jul 2026",
       readTime: "6 min read",
-      link: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
+      content: [
+        "Almost every analytics project starts the same way: a folder of CSVs or a raw database dump that nobody has fully audited. Before I let any of that touch a dashboard, it goes through the same checklist.",
+        "Step one is always nulls — not just counting them, but understanding why they exist. A null in a 'discount applied' column usually means zero, but a null in 'customer_id' usually means a broken join upstream. Treating both the same way is how bad KPIs get published.",
+        "Step two is duplicates, and specifically near-duplicates: same order ID with a one-second timestamp difference, same customer with two slightly different spellings of their name. I run a GROUP BY with a HAVING COUNT(*) > 1 on every key column combination before I trust a row count.",
+        "Step three is type mismatches — dates stored as text, currency stored as strings with symbols still attached, IDs that are sometimes numeric and sometimes alphanumeric. These fail silently in aggregations, so I explicitly CAST everything and check for conversion errors rather than assuming the data is already clean.",
+        "The last step is a validation join back to a source system total — comparing my cleaned dataset's SUM() against whatever the client's existing system reports. If those two numbers don't match within a reasonable margin, nothing goes to a dashboard until I know why.",
+      ],
     },
     {
       id: "a3",
@@ -188,7 +201,13 @@ transform complex datasets into actionable insights and automate reporting workf
       summary: "A practical look at where LLM copilots genuinely speed up analytics work (and where they still can't replace judgment).",
       date: "Jun 2026",
       readTime: "7 min read",
-      link: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
+      content: [
+        "There's a lot of noise right now about AI replacing analysts. From actually using these tools day to day, the honest picture is more specific than that.",
+        "Where GenAI copilots genuinely help: writing first-draft DAX or SQL from a plain-English description, explaining an unfamiliar query someone else wrote, and generating boilerplate documentation for a dashboard. These are real, measurable time savings — often 30-40% faster on the first draft of a measure.",
+        "Where they don't help, and can actively hurt if you trust them blindly: understanding what a stakeholder actually needs versus what they asked for, catching a data quality issue that doesn't look wrong on the surface, and making judgment calls about which metric best represents business performance. That still requires a human who understands the business.",
+        "The analysts I've seen get the most value out of these tools treat them like a very fast junior analyst — useful for a first pass, but every output still gets reviewed against the actual data before it goes anywhere near a client.",
+        "My honest prediction: the skill that matters more, not less, in a GenAI world is knowing exactly what question you're trying to answer. The tools got faster at writing code; they didn't get better at knowing which code is worth writing.",
+      ],
     },
     {
       id: "a4",
@@ -197,7 +216,13 @@ transform complex datasets into actionable insights and automate reporting workf
       summary: "What I learned building churn-risk and demand-forecasting models — feature engineering tricks that mattered more than the algorithm.",
       date: "Apr 2026",
       readTime: "6 min read",
-      link: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
+      content: [
+        "When I built my first demand-forecasting model, I assumed the choice of algorithm would matter most. It turned out feature engineering mattered far more than which model I picked.",
+        "The single biggest improvement came from adding lag features and rolling averages (7-day, 14-day, 30-day) rather than feeding raw daily values straight into the model. Sudden spikes and dips get smoothed into a signal the model can actually learn from.",
+        "The second biggest improvement was encoding calendar effects explicitly — day of week, is-holiday, days-until-next-holiday. Retail and FMCG demand is driven by the calendar far more than by anything the model can infer from historical values alone.",
+        "For churn-risk specifically, the most predictive features weren't usage metrics directly, but the rate of change in usage — a customer whose activity dropped 40% in two weeks was a far stronger churn signal than a customer with consistently low activity.",
+        "The model itself (I mostly used gradient boosting and simple ARIMA baselines) mattered much less than getting these features right. A simple model on well-engineered features consistently beat a complex model on raw data in every project I worked on.",
+      ],
     },
     {
       id: "a5",
@@ -206,7 +231,13 @@ transform complex datasets into actionable insights and automate reporting workf
       summary: "The stakeholder-alignment questions that save weeks of rework later, learned the hard way across 10+ client engagements.",
       date: "Feb 2026",
       readTime: "4 min read",
-      link: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
+      content: [
+        "The single biggest cause of rework I've seen across 10+ client engagements isn't bad data or the wrong tool — it's starting to build before requirements are actually locked down.",
+        "The first question I now always ask: 'What decision will you make differently based on this dashboard?' If a stakeholder can't answer that clearly, the requirement isn't ready yet, no matter how detailed the spec looks on paper.",
+        "The second: 'Who else needs to see this, and do they need the same view?' A dashboard built for one stakeholder's exact mental model often needs a second version, or at least a second filter set, for a different audience — better to know that upfront than after a full build.",
+        "The third: 'What does good look like, with real numbers?' Getting a stakeholder to describe an example of a healthy KPI value versus a concerning one, in their own words, surfaces edge cases and definitional disagreements early — far cheaper to resolve before a single line of DAX is written.",
+        "None of these questions are complicated. What matters is asking them before starting, not during a review call when the first draft is already built.",
+      ],
     },
     {
       id: "a6",
@@ -215,9 +246,16 @@ transform complex datasets into actionable insights and automate reporting workf
       summary: "A no-hype guide to knowing when a dataset is actually big enough to justify Spark over plain Python/Pandas.",
       date: "Dec 2025",
       readTime: "5 min read",
-      link: "https://www.linkedin.com/in/gaurav-pujari-90296a1ba",
+      content: [
+        "PySpark gets recommended a lot as the default tool for 'big data,' but most analytics datasets I've worked with never actually need it. Here's the rough rule of thumb I use.",
+        "If a dataset comfortably fits in memory (roughly under a few GB, depending on your machine) and the transformations are mostly joins, group-bys, and pivots, plain Pandas is faster to write, faster to debug, and just as fast to run. Reaching for Spark here adds setup overhead for no real benefit.",
+        "The switch becomes worth it when a dataset is large enough that Pandas starts throwing memory errors, or when a job needs to run repeatedly on data that grows over time and you want horizontal scalability built in from day one rather than rewriting the pipeline later.",
+        "The other case where PySpark earns its complexity: distributed environments already running Spark (Databricks being the common one), where staying in the same ecosystem avoids extra data movement and lets you reuse existing cluster infrastructure.",
+        "My honest advice to analysts starting out: get comfortable with Pandas and SQL first. Learn PySpark when a specific project actually forces your hand on scale — not because it's the trendier tool to have on a resume.",
+      ],
     },
   ],
+
 
   education: [
     { id: "edu1", degree: "Master of Computer Applications (MCA)", institute: "Sri Balaji University, Pune", year: "04/2025", score: "CGPA: 8.56" },
@@ -619,7 +657,7 @@ function renderArticles(containerId, limit) {
           <div class="body">${a.summary}</div>
           <div class="articlefoot">
             <span>${a.date}</span>
-            <a href="${a.link}" target="_blank" rel="noreferrer"><b>Read →</b></a>
+            <a href="article.html?id=${a.id}"><b>Read →</b></a>
           </div>
         </article>
       `
@@ -779,6 +817,62 @@ function renderClientsPage() {
 function renderArticlesPage() {
   renderHero();
   renderArticles("articlesList");
+  trackVisit();
+}
+
+/* ================================
+   ✅ Single Article Page (article.html?id=a1)
+   This is the page you actually paste on LinkedIn — each article
+   gets its own shareable, permanent URL on your own site.
+================================ */
+function renderArticlePage() {
+  renderHero();
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  const data = getData();
+  const article = (data.articles || []).find((a) => a.id === id);
+  const wrap = el("articleContent");
+
+  if (!article) {
+    if (wrap) {
+      wrap.innerHTML = `
+        <div class="notice">
+          Couldn't find that article. <a href="articles.html"><b>← Back to all articles</b></a>
+        </div>
+      `;
+    }
+    trackVisit();
+    return;
+  }
+
+  if (el("articleCat")) el("articleCat").textContent = `${article.category} · ${article.readTime}`;
+  if (el("articleTitle")) el("articleTitle").textContent = article.title;
+  if (el("articleDate")) el("articleDate").textContent = article.date;
+  document.title = `${article.title} — Gaurav Pujari`;
+
+  if (wrap) {
+    wrap.innerHTML = (article.content || [article.summary])
+      .map((para) => `<p>${para}</p>`)
+      .join("");
+  }
+
+  // Build a ready-to-copy share link (this page's own URL) for pasting on LinkedIn
+  const shareUrl = window.location.href;
+  if (el("shareUrlBox")) el("shareUrlBox").textContent = shareUrl;
+  const copyBtn = el("btnCopyLink");
+  if (copyBtn) {
+    copyBtn.onclick = () => {
+      navigator.clipboard
+        .writeText(shareUrl)
+        .then(() => {
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => (copyBtn.textContent = "Copy Link"), 1500);
+        })
+        .catch(() => alert(shareUrl));
+    };
+  }
+
   trackVisit();
 }
 
@@ -1003,6 +1097,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (page === "projects") renderProjectsPage();
   if (page === "clients") renderClientsPage();
   if (page === "articles") renderArticlesPage();
+  if (page === "article") renderArticlePage();
   if (page === "resume") renderResumePage();
   if (page === "contact") renderContactPage();
   if (page === "admin") renderAdminPage();

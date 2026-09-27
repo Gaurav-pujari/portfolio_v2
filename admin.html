@@ -30,7 +30,7 @@
     <!-- Login -->
     <div class="card" id="adminLogin">
       <div class="title" style="font-size:19px">Admin Login</div>
-      <div class="sub"></div>
+      <div class="sub">Only for you</div>
       <div class="hr"></div>
 
       <label class="label">Password</label>
@@ -39,7 +39,11 @@
         <button class="btn primary" id="btnAdminLogin">Login</button>
       </div>
 
-
+      <div class="notice" style="margin-top:12px">
+        Note: This admin is local (browser storage + password check), not a secure backend —
+        don't reuse a sensitive password here. Default password is <b>gaurav@2026</b>; change
+        <code>ADMIN_PASSWORD</code> in app.js before sharing this repo publicly.
+      </div>
     </div>
 
     <!-- KPI Panel -->
@@ -114,6 +118,66 @@
       </div>
 
       <div class="visit-table-wrap" id="visitTableWrap" style="margin-top:14px"></div>
+    </div>
+
+    <!-- ✅ Manage Articles -->
+    <div class="card" id="adminPanelArticles" style="margin-top:14px; display:none">
+      <div class="section-head-row">
+        <div>
+          <div class="title" style="font-size:19px">Manage Articles</div>
+          <div class="sub">Add, edit, or remove articles shown on the public Articles page</div>
+        </div>
+        <button class="btn primary" id="btnNewArticle">+ New Article</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="notice" id="articleSyncNotice"></div>
+
+      <div class="notice" style="margin-top:10px">
+        <b>Making this visible to real visitors (not just your browser):</b>
+        <ol style="margin:8px 0 0; padding-left:18px; line-height:1.7">
+          <li>Create a second free bin at <b>jsonbin.io</b> (a separate one from the visitor-log bin) and copy its Bin ID + X-Master-Key.</li>
+          <li>Open <b>app.js</b>, find <code>ARTICLES_SYNC_URL</code> / <code>ARTICLES_SYNC_KEY</code> near the "ARTICLES — shared storage" section, and paste them in.</li>
+          <li>Redeploy — every article you add or edit here will now sync to that bin, and every visitor's browser will fetch and display it automatically.</li>
+        </ol>
+        Until that's configured, articles you save here only appear in this browser (fine for testing, not for real visitors).
+      </div>
+
+      <div id="articleAdminList" style="margin-top:14px"></div>
+
+      <!-- Add / Edit form -->
+      <div id="articleForm" style="display:none; margin-top:16px; border-top:1px solid var(--border); padding-top:16px">
+        <input type="hidden" id="afId" />
+
+        <label class="label">Title</label>
+        <input class="input" id="afTitle" placeholder="Article title" />
+
+        <div class="grid2" style="margin-top:10px">
+          <div>
+            <label class="label">Category</label>
+            <input class="input" id="afCategory" placeholder="Power BI, SQL, Trending Tech..." />
+          </div>
+          <div>
+            <label class="label">Read Time</label>
+            <input class="input" id="afReadTime" placeholder="5 min read" />
+          </div>
+        </div>
+
+        <label class="label" style="margin-top:10px">Date</label>
+        <input class="input" id="afDate" placeholder="Sep 2026" />
+
+        <label class="label" style="margin-top:10px">Summary (short teaser shown on the card)</label>
+        <textarea class="input textarea" id="afSummary"></textarea>
+
+        <label class="label" style="margin-top:10px">Full Content (separate paragraphs with a blank line)</label>
+        <textarea class="input textarea" id="afContent" style="min-height:220px"></textarea>
+
+        <div style="margin-top:12px">
+          <button class="btn primary" id="btnSaveArticle">Save Article</button>
+          <button class="btn" id="btnCancelArticle">Cancel</button>
+        </div>
+      </div>
     </div>
 
     <div class="footer">© <span id="yr"></span> Gaurav Portfolio</div>

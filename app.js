@@ -992,8 +992,8 @@ function trackVisit() {
    real visitors, configure a free jsonbin.io bin below — steps
    are also shown on the Admin page.
 ========================================================= */
-const ARTICLES_SYNC_URL = ""; // e.g. "https://api.jsonbin.io/v3/b/XXXXXXXX"
-const ARTICLES_SYNC_KEY = ""; // your X-Master-Key from jsonbin.io
+const ARTICLES_SYNC_URL = "https://api.jsonbin.io/v3/b/6ab91765ffd5d160533470d4"; 
+const ARTICLES_SYNC_KEY = "$2a$10$z2eiCYzq/fuz6ewgeZECbud7mfCabWVnzfbmx.rCAQLfyS2m4tQei"; // your X-Master-Key from jsonbin.io
 
 function articlesSyncConfigured() {
   return Boolean(ARTICLES_SYNC_URL && ARTICLES_SYNC_KEY);
